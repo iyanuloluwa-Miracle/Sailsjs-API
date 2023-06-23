@@ -1,0 +1,70 @@
+
+module.exports = {
+   async create(req, res){
+    try{
+        let params = req.allParams();
+        if(!params.name){
+            return res.badRequest({err:'name is required field'})
+        }
+        const results = await Company.create({
+            name: params.name,
+            city: params.city,
+            address: params.address
+        })
+        return res.ok(results)
+    }
+    catch(err){
+        return res.serverError(err)
+    }
+
+   },
+   //Get all the companies information
+    async find(req,res){  
+        try{
+            const companies = await Company.find()
+            return res.ok(companies)
+ 
+        }
+        catch (err) {
+            return res.serverError(err)
+        }
+
+
+    },
+    async findOne(req,res){
+        try{
+            const company = await Company.findOne({
+                id: req.params.id
+
+            })
+            return res.ok(company)
+        }catch(err){
+            return res.serverError(err)
+
+        }
+
+    },
+    async update(req,res){
+        try{
+            let params = req.allParams()
+            let attributes = {};
+            if(params.name){
+                attributes.name = params.name;
+            }
+            if(params.name){
+                attributes.city = params.city;
+            }
+            if(params.name){
+                attributes.address = params.address;
+            }
+
+        }catch(err){
+            return res.serverError(err)
+        }
+
+    },
+    delete(req,res){
+
+    }
+    
+}
